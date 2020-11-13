@@ -80,19 +80,6 @@
         $token = handleToken($result, $client, $conf);
         $client->setAccessToken($token);
 
-        // Get which user we're logged in to store the access token
-        $userUrl = 'https://oauth.reddit.com/api/v1/me.json';
-        $response = $client->fetch($userUrl);
-
-        $user = $response['result']['name'];
-
-        if(!$user) {
-            die("Uh-oh. We didn't get the user off that account. Please try again (refresh)");
-        }
-        if (!$conf->access_tokens->{$user}) {
-            $conf->access_token = $access_result->access_token;
-        }
-
         $urlinfo = parse_url($_SERVER["REQUEST_URI"]);
         header('Location: ' . $urlinfo['path']);
 
